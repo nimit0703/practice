@@ -124,10 +124,28 @@ public class Sorting {
         recursiveBubbleSort(arr, n - 1);
     }
 
+    public static void recursiveInsertionSort(int[] arr, int i, int n) {
+
+        if (i == n)
+            return;
+
+        int j = i;
+
+        // swap
+        while (j > 0 && arr[j - 1] > arr[j]) {
+            int temp = arr[j];
+            arr[j] = arr[j - 1];
+            arr[j - 1] = temp;
+            j--;
+        }
+
+        recursiveInsertionSort(arr, i + 1, n);
+    }
+
     public static void main(String[] args) {
         // int[] arr = { 1,2,3,4,5,6,7 };
         int[] arr = { 13, 46, 24, 52, 20, 9 };
-
+        int n = arr.length;
         // Print array before sorting
         System.out.println("Before sort:");
         for (int num : arr) {
@@ -139,8 +157,9 @@ public class Sorting {
         // selectionSort(arr);
         // bubbleSort(arr);
         // insertionSort(arr);
-        // mergeSort(arr, 0, arr.length - 1);
-        recursiveBubbleSort(arr, arr.length);
+        // mergeSort(arr, 0, n - 1);
+        // recursiveBubbleSort(arr, n);
+        recursiveInsertionSort(arr, 0, n);
 
         System.out.println("After sort:");
         for (int num : arr) {
