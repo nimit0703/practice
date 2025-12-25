@@ -1,3 +1,7 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Sorting {
 
     // select minimum and replace to start point
@@ -57,6 +61,69 @@ public class Sorting {
         }
     }
 
+    public static void mergeSort(int[] arr, int low, int high) {
+        if (low >= high)
+            return;
+
+        int mid = (low + high) / 2;
+
+        mergeSort(arr, low, mid);
+
+        mergeSort(arr, mid + 1, high);
+
+        merge(arr, low, mid, high);
+    }
+
+    public static void merge(int arr[], int low, int mid, int high) {
+
+        List<Integer> temp = new ArrayList<>();
+        int left = low, right = mid + 1;
+        while (left <= mid && right <= high) {
+            if (arr[left] <= arr[right]) {
+                temp.add(arr[left]);
+                left++;
+            } else {
+                temp.add(arr[right]);
+                right++;
+            }
+        }
+
+        while (left <= mid) {
+            temp.add(arr[left]);
+            left++;
+        }
+        while (right <= high) {
+            temp.add(arr[right]);
+            right++;
+        }
+
+        for (int i = low; i <= high; i++) {
+            arr[i] = temp.get(i - low);
+        }
+    }
+
+    public static void recursiveBubbleSort(int[] arr, int n) {
+
+        if (n == 1)
+            return;
+
+        int swapped = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            // swap
+            if (arr[i] > arr[i + 1]) {
+                swapped = 1;
+                int temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+            }
+        }
+        if (swapped == 0)
+            return;
+
+        recursiveBubbleSort(arr, n - 1);
+    }
+
     public static void main(String[] args) {
         // int[] arr = { 1,2,3,4,5,6,7 };
         int[] arr = { 13, 46, 24, 52, 20, 9 };
@@ -71,7 +138,9 @@ public class Sorting {
 
         // selectionSort(arr);
         // bubbleSort(arr);
-        insertionSort(arr);
+        // insertionSort(arr);
+        // mergeSort(arr, 0, arr.length - 1);
+        recursiveBubbleSort(arr, arr.length);
 
         System.out.println("After sort:");
         for (int num : arr) {
